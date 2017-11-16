@@ -1,0 +1,47 @@
+<section class="section">
+  <div class="container is-widescreen">
+
+    <h1 class="title is-1">Map GAG. Go fun yourself.</h1>
+    
+    <div id="map" class="notification is-info"></div>
+
+    <p v-if="current_location"><span class="tag">Current location: <span v-html="current_location"></span></span></p>
+                    
+    <div class="field has-addons">
+      <div class="control is-expanded has-icons-left">
+        <input class="input" type="text" placeholder="Location" id="location" v-model="location">
+        <span class="icon is-small is-left">
+          <i class="fa fa-search"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="field has-addons">
+      <div class="control is-expanded has-icons-left">
+        <div class="select is-fullwidth">
+          <select v-model="country" @change="changeBase">
+            <option value="Browser">Browser</option>
+            <option value="Singapore">Singapore</option>
+            <option value="Taipei">Taipei</option>
+            <option value="Taichung">Taichung</option>
+            <option value="Tainan">Tainan</option>
+            <option value="Kaohsiung">Kaohsiung</option>
+            <option value="Yilan">Yilan</option>
+          </select>
+        </div>
+        <span class="icon is-small is-left">
+          <i class="fa fa-globe"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="modal" :class="show_modal ? 'is-active' : ''">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box" v-html="modal_content"></div>
+      </div>
+      <button class="modal-close is-large" aria-label="close" @click="closeModal"></button>
+    </div>
+        
+  </div>
+</section>
