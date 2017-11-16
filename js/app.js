@@ -25,11 +25,11 @@ function initMap(app) {
     app.marker = marker;
 
     var input     = document.getElementById('location');
-    var searchBox = new google.maps.places.Autocomplete(input);
+    var searchBox = new google.maps.places.SearchBox(input);
 
     app.search_box = searchBox;
 
-    searchBox.addListener('place_changed', app.placeChangeHanlder);
+    searchBox.addListener('places_changed', app.placeChangeHanlder);
 
     var geocoder = new google.maps.Geocoder;
 
@@ -141,9 +141,17 @@ var MainPanel = Vue.component('main-panel', function(resolve, reject){
 				},//eo changeBase
 				
 				placeChangeHanlder: function(){
-	          		var place = this.search_box.getPlace();
+	          		var places = this.search_box.getPlaces();
 
-	          		var _ll = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
+	          		if (places.length == 0) { //no places
+	          			this.showErr(this, 'Cannot find the place!')
+			            return false;
+			        }
+
+			        var place = places.pop();
+			        var _ll = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
+
+			        console.info('place:', place);
 
 			        this.marker.setPosition(_ll);
 			        this.map.setCenter(_ll);
